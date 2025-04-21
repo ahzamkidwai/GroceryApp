@@ -141,3 +141,53 @@ export const updateOrderStatus = async (req, reply) => {
     });
   }
 };
+
+export const getOrders = async (req, reply) => {
+  try {
+    const { status, customerId, deliveryPartnerId, branchId } = req.query;
+    let query = {};
+
+    if (status) {
+      query.status = status;
+    }
+
+    if (customerId) {
+      query.customer = customerId;
+    }
+
+    if (deliveryPartnerId) {
+      query.deliveryPartner = deliveryPartnerId;
+      query.branch = branchId;
+    }
+
+    const orders = await Order.find(query).populate(
+      "Customer branch items. Items delivery partner"
+    );
+
+    return reply.send(orders);
+  } catch (error) {
+    return reply.status(500).send({
+      message: "Failed to retrieve orders",
+      error,
+    });
+  }
+};
+
+export const getOrderById = async (req, reply) => {
+  try {
+    const { orderId } = req.params;
+    const order = await Order.find(orderId).populate(
+      "Customer branch items. Items delivery partner"
+    );
+    if (!order) {
+      return reply.status(404).send({ message: "Order not found" });
+    }
+
+    return reply.send(order);
+  } catch (error) {
+    return reply.status(500).send({
+      message: "Failed to retrieve single order",
+      error,
+    });
+  }
+};
