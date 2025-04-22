@@ -1,4 +1,4 @@
-import { verifyToken } from "../middlewares/auth";
+import { verifyToken } from "../middlewares/auth.js";
 import {
   createOrder,
   confirmOrder,

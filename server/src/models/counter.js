@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const counterSchema = new mongoose.connect({
+const counterSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
   sequence_value: {
     type: Number,

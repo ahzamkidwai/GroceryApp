@@ -1,4 +1,4 @@
-import { Customer, DeliveryPartner } from "../../models/user";
+import { Customer, DeliveryPartner } from "../../models/user.js";
 import Branch from "../../models/branch.js";
 import Order from "../../models/order.js";
 
