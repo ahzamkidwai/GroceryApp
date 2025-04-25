@@ -5,11 +5,11 @@ module.exports = {
     [
       'module-resolver',
       {
-        root: ['./'],
+        root: ['./src'],
         extensions: ['.js', '.ts', '.tsx', '.jsx'],
 
         alias: {
-          '@': './',
+          '@': './src',
           'tailwind.config': './tailwind.config.js',
           '@assets': './src/assets',
           '@features': './src/features',

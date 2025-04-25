@@ -1,18 +1,7 @@
-import {Text, View} from 'react-native';
-import {Heading} from './components/ui/heading';
+import Navigation from '@/navigation/Navigation';
 
 const App = () => {
-  return (
-    <View
-      style={{
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Text>App</Text>
-      <Heading>I am a Heading</Heading>
-    </View>
-  );
+  return <Navigation />;
 };
 
 export default App;
