@@ -1,19 +1,85 @@
-import {Image, StyleSheet, View} from 'react-native';
+import {Alert, Image, StyleSheet, View} from 'react-native';
 import {FC, useEffect} from 'react';
 import {Colors} from '@/utils/Constants';
 import Logo from '@assets/images/logo.jpeg';
 import {screenHeight, screenWidth} from '@/utils/Scaling';
-import {navigate} from '@/utils/NavigationUtils';
+import {navigate, resetAndNavigate} from '@/utils/NavigationUtils';
+import GeoLocation from '@react-native-community/geolocation';
+import {useAuthStore} from '@/state/authStore';
+import {tokenStorage} from '@/state/storage';
+import {jwtDecode} from 'jwt-decode';
+import {refetchUser, refresh_tokens_handler} from '@/service/authService';
+
+GeoLocation.setRNConfiguration({
+  skipPermissionRequests: false,
+  authorizationLevel: 'always',
+  enableBackgroundLocationUpdates: true,
+  locationProvider: 'auto',
+});
+
+interface DecodedToken {
+  exp: number;
+}
 
 const SplashScreen: FC = () => {
+  const {user, setUser} = useAuthStore();
+
+  const tokenCheck = async () => {
+    const accessToken = tokenStorage.getString('accessToken') as string;
+    const refreshToken = tokenStorage.getString('refreshToken') as string;
+
+    if (accessToken) {
+      const decodeAccessToken = jwtDecode<DecodedToken>(accessToken);
+      const decodeRefreshToken = jwtDecode<DecodedToken>(refreshToken);
+
+      const currentTime = Date.now() / 1000;
+
+      if (decodeRefreshToken?.exp < currentTime) {
+        resetAndNavigate('CustomerLogin');
+        Alert.alert('Session Expired', 'Please Login Again');
+        return false;
+      }
+
+      if (decodeAccessToken?.exp < currentTime) {
+        try {
+          refresh_tokens_handler();
+          await refetchUser(setUser);
+        } catch (error) {
+          console.log('Error occurrrrreddd : ', error);
+          return false;
+        }
+        resetAndNavigate('CustomerLogin');
+        Alert.alert('Session Expired', 'Please Login Again');
+        return false;
+      }
+
+      if (user?.role === 'Customer') {
+        resetAndNavigate('ProductDashboard');
+      } else {
+        resetAndNavigate('DeliveryDashboard');
+      }
+
+      return true;
+    }
+
+    resetAndNavigate('CustomerLogin');
+    return false;
+  };
+
   useEffect(() => {
-    const navigateUser = async () => {
+    const initialStartup = async () => {
       try {
         navigate('CustomerLogin');
-      } catch (error) {}
+        GeoLocation.requestAuthorization();
+        tokenCheck();
+      } catch (error) {
+        Alert.alert(
+          'Sorry we need location service to give you better shopping experience',
+        );
+      }
     };
 
-    const timeoutId = setTimeout(navigateUser, 2000);
+    const timeoutId = setTimeout(initialStartup, 2000);
     return () => {
       clearTimeout(timeoutId);
     };

@@ -7,6 +7,7 @@ import SplashScreen from '@/features/authentication/SplashScreen';
 import CustomerLogin from '@/features/authentication/CustomerLogin';
 import DeliveryLogin from '@/features/authentication/DeliveryLogin';
 import ProductDashboard from '@/features/dashboard/ProductDashboard';
+import DeliveryDashboard from '@/features/delivery/DeliveryDashboard';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,11 +28,8 @@ const Navigation: FC = () => {
           component={CustomerLogin}
           options={{animation: 'fade'}}
         />
-        <Stack.Screen
-          name="ProductDashboard"
-          component={ProductDashboard}
-          options={{animation: 'fade'}}
-        />
+        <Stack.Screen name="ProductDashboard" component={ProductDashboard} />
+        <Stack.Screen name="DeliveryDashboard" component={DeliveryDashboard} />
         {/* <Stack.Screen
           name="CustomerLogin"
           component={CustomerLogin}

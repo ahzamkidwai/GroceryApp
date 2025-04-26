@@ -3,8 +3,10 @@ import {
   Animated,
   Image,
   Keyboard,
+  Platform,
   SafeAreaView,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {useEffect, useRef, useState} from 'react';
@@ -25,6 +27,8 @@ import Logo from '@assets/images/logo.jpeg';
 import CustomInput from '@/components/ui/CustomInput';
 import CustomButton from '@/components/ui/CustomButton';
 import {customerLoginHandler} from '@/service/authService';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const bottomColors = [...lightColors].reverse();
 
@@ -149,6 +153,11 @@ const CustomerLogin = () => {
 
         <SafeAreaView />
       </View>
+      <TouchableOpacity
+        style={styles.absoluteSwitchButton}
+        onPress={() => resetAndNavigate('DeliveryLogin')}>
+        <MaterialCommunityIcons name="bike-fast" />
+      </TouchableOpacity>
     </GestureHandlerRootView>
   );
 };
@@ -191,12 +200,24 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginVertical: 20,
   },
-  text: {
-    marginTop: 2,
-    marginBottom: 25,
-    opacity: 0.8,
-  },
-  phoneText: {
-    marginLeft: 10,
+  text: {marginTop: 2, marginBottom: 25, opacity: 0.8},
+  phoneText: {marginLeft: 10},
+  absoluteSwitchButton: {
+    position: 'absolute',
+    backgroundColor: '#fff',
+    top: Platform.OS === 'ios' ? 40 : 20,
+    shadowColor: '#000',
+    shadowOffset: {width: 1, height: 1},
+    shadowOpacity: 0.5,
+    shadowRadius: 12,
+    elevation: 10,
+    padding: 10,
+    height: 50,
+    width: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 50,
+    right: 10,
+    zIndex: 99,
   },
 });
