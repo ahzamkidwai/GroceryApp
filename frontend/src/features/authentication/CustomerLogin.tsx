@@ -1,4 +1,12 @@
-import {Animated, Image, SafeAreaView, StyleSheet, View} from 'react-native';
+import {
+  Alert,
+  Animated,
+  Image,
+  Keyboard,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {useEffect, useRef, useState} from 'react';
 import {
   GestureHandlerRootView,
@@ -16,6 +24,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Logo from '@assets/images/logo.jpeg';
 import CustomInput from '@/components/ui/CustomInput';
 import CustomButton from '@/components/ui/CustomButton';
+import {customerLoginHandler} from '@/service/authService';
 
 const bottomColors = [...lightColors].reverse();
 
@@ -63,7 +72,18 @@ const CustomerLogin = () => {
     }
   };
 
-  const handleAuth = async () => {};
+  const handleAuth = async () => {
+    Keyboard.dismiss();
+    setLoading(true);
+    try {
+      await customerLoginHandler(phoneNumber);
+      resetAndNavigate('ProductDashboard');
+    } catch (error) {
+      Alert.alert('Login Failed');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <GestureHandlerRootView style={styles.container}>
