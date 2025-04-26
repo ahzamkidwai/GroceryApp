@@ -15,7 +15,7 @@ const ProductSlider = () => {
 
   return (
     <View pointerEvents="none">
-      <AutoScroll duration={1000} endPaddingWidth={0} style={styles.autoScroll}>
+      <AutoScroll duration={3000} endPaddingWidth={0} style={styles.autoScroll}>
         <View style={styles.gridContainer}>
           {rows?.map((row: any, rowIndex: number) => {
             return <MemoizedRow key={rowIndex} row={row} rowIndex={rowIndex} />;
