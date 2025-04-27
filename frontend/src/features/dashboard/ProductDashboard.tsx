@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   Animated,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import {NoticeHeight, screenHeight} from '@/utils/Scaling';
@@ -27,6 +28,9 @@ import CustomText from '@/components/ui/CustomText';
 import {Fonts} from '@/utils/Constants';
 import {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import AnimatedHeader from './AnimatedHeader';
+import {opacity} from 'react-native-reanimated/lib/typescript/Colors';
+import Content from '@/components/dashboard/Content';
+import StickySearchBar from '@/components/dashboard/StickySearchBar';
 
 const NOTICE_HEIGHT = -(NoticeHeight + 12);
 
@@ -124,7 +128,32 @@ const ProductDashboard = () => {
                 return () => clearTimeout(timeoutId);
               }}
             />
+
+            <StickySearchBar />
           </CollapsibleHeaderContainer>
+
+          <CollapsibleScrollView
+            nestedScrollEnabled
+            showsVerticalScrollIndicator={false}
+            style={styles.panelContainer}>
+            <Content />
+
+            <View style={{backgroundColor: '#f8f8f8', padding: 20}}>
+              <CustomText
+                fontSize={RFValue(40)}
+                fontFamily={Fonts.Bold}
+                style={{opacity: 0.2, fontWeight: '700'}}>
+                Grocery Delivery App
+              </CustomText>
+
+              <CustomText
+                fontSize={RFValue(12)}
+                fontFamily={Fonts.Bold}
+                style={{marginTop: 10, opacity: 0.2, paddingBlock: 100}}>
+                Developed by Ahzam Naseem Kidwai
+              </CustomText>
+            </View>
+          </CollapsibleScrollView>
         </CollapsibleContainer>
       </>
     </NoticeAnimation>
