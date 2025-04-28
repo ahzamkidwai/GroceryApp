@@ -96,7 +96,7 @@ const ProductDashboard = () => {
         <Visuals />
         <SafeAreaView />
 
-        <Animated.View style={[styles.backToTopButton]}>
+        {/* <Animated.View style={[styles.backToTopButton]}>
           <TouchableOpacity
             onPress={() => {
               scrollY.value = 0;
@@ -115,7 +115,7 @@ const ProductDashboard = () => {
               Back to Top
             </CustomText>
           </TouchableOpacity>
-        </Animated.View>
+        </Animated.View> */}
 
         <CollapsibleContainer style={styles.panelContainer}>
           <CollapsibleHeaderContainer containerStyle={styles.transparent}>
