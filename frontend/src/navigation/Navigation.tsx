@@ -1,5 +1,5 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, {FC} from 'react';
+import {StyleSheet} from 'react-native';
+import {FC} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {navigationRef} from '@/utils/NavigationUtils';
@@ -8,6 +8,7 @@ import CustomerLogin from '@/features/authentication/CustomerLogin';
 import DeliveryLogin from '@/features/authentication/DeliveryLogin';
 import ProductDashboard from '@/features/dashboard/ProductDashboard';
 import DeliveryDashboard from '@/features/delivery/DeliveryDashboard';
+import ProductCategories from '@/features/product/ProductCategories';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ const Navigation: FC = () => {
         />
         <Stack.Screen name="ProductDashboard" component={ProductDashboard} />
         <Stack.Screen name="DeliveryDashboard" component={DeliveryDashboard} />
+        <Stack.Screen name="ProductCategories" component={ProductCategories} />
         {/* <Stack.Screen
           name="CustomerLogin"
           component={CustomerLogin}
