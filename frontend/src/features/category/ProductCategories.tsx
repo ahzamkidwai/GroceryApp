@@ -8,6 +8,7 @@ import {
   getProductsByCategoryId,
 } from '@/service/productService';
 import ProductList from './ProductList';
+import withCart from '../cart/WithCart';
 
 const ProductCategories = () => {
   const [categories, setCategories] = useState<any[]>([]);
@@ -84,7 +85,7 @@ const ProductCategories = () => {
   );
 };
 
-export default ProductCategories;
+export default withCart(ProductCategories);
 
 const styles = StyleSheet.create({
   mainContainer: {flex: 1, backgroundColor: '#fff'},

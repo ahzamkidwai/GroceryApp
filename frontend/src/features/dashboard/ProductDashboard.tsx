@@ -32,6 +32,7 @@ import {opacity} from 'react-native-reanimated/lib/typescript/Colors';
 import Content from '@/components/dashboard/Content';
 import StickySearchBar from '@/components/dashboard/StickySearchBar';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import withCart from '../cart/WithCart';
 
 const NOTICE_HEIGHT = -(NoticeHeight + 12);
 
@@ -172,7 +173,7 @@ const ProductDashboard = () => {
   );
 };
 
-export default withCollapsibleContext(ProductDashboard);
+export default withCart(withCollapsibleContext(ProductDashboard));
 
 const styles = StyleSheet.create({
   panelContainer: {flex: 1},
