@@ -1,12 +1,5 @@
 import {FC, ReactNode} from 'react';
-import {
-  Animated,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {Animated, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
 
 interface ScalePressProps {
   onPress?: () => void;

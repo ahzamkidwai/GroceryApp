@@ -5,13 +5,15 @@ import CustomText from '../ui/CustomText';
 import {Fonts} from '@/utils/Constants';
 import {Defs, G, Path, Svg, Use} from 'react-native-svg';
 import {wavyData} from '@/utils/dummyData';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Notice = () => {
+  const insets = useSafeAreaInsets();
   return (
     <View style={{height: NoticeHeight}}>
       <View style={styles.container}>
         <View style={styles.noticeContainer}>
-          <SafeAreaView style={{padding: 10}}>
+          <SafeAreaView style={{padding: 10, paddingTop: insets?.top || 20}}>
             <CustomText
               style={styles.heading}
               variant="h8"

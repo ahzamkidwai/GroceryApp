@@ -3,7 +3,7 @@ import {
   StyleSheet,
   Animated as RNAnimated,
   SafeAreaView,
-  Animated,
+  // Animated,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -26,11 +26,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {RFValue} from 'react-native-responsive-fontsize';
 import CustomText from '@/components/ui/CustomText';
 import {Fonts} from '@/utils/Constants';
-import {useAnimatedStyle, withTiming} from 'react-native-reanimated';
+import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import AnimatedHeader from './AnimatedHeader';
 import {opacity} from 'react-native-reanimated/lib/typescript/Colors';
 import Content from '@/components/dashboard/Content';
 import StickySearchBar from '@/components/dashboard/StickySearchBar';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const NOTICE_HEIGHT = -(NoticeHeight + 12);
 
@@ -50,6 +51,8 @@ const ProductDashboard = () => {
     return {opacity, transform: [{translateY}]};
   });
 
+  const insets = useSafeAreaInsets();
+
   const slideUp = () => {
     RNAnimated.timing(noticePosition.current, {
       toValue: NOTICE_HEIGHT,
@@ -66,28 +69,36 @@ const ProductDashboard = () => {
     }).start();
   };
 
+  // useEffect(() => {
+  //   const updateUser = () => {
+  //     Geolocation.getCurrentPosition(
+  //       position => {
+  //         const {latitude, longitude} = position.coords;
+  //         reverseGeoCode(latitude, longitude, setUser);
+  //       },
+  //       err =>
+  //         console.log(
+  //           'Error occurred while getting updateUser location : ',
+  //           err,
+  //         ),
+  //       {
+  //         enableHighAccuracy: false,
+  //         timeout: 15000,
+  //       },
+  //     );
+  //   };
+
+  //   // slideDown();
+
+  //   // updateUser();
+  // }, []);
+
   useEffect(() => {
-    const updateUser = () => {
-      Geolocation.getCurrentPosition(
-        position => {
-          const {latitude, longitude} = position.coords;
-          reverseGeoCode(latitude, longitude, setUser);
-        },
-        err =>
-          console.log(
-            'Error occurred while getting updateUser location : ',
-            err,
-          ),
-        {
-          enableHighAccuracy: false,
-          timeout: 15000,
-        },
-      );
-    };
-
-    // slideDown();
-
-    // updateUser();
+    slideDown();
+    const timeoutId = setTimeout(() => {
+      slideUp();
+    }, 3000);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (
@@ -96,7 +107,7 @@ const ProductDashboard = () => {
         <Visuals />
         <SafeAreaView />
 
-        {/* <Animated.View style={[styles.backToTopButton]}>
+        <Animated.View style={[styles.backToTopButton]}>
           <TouchableOpacity
             onPress={() => {
               scrollY.value = 0;
@@ -115,9 +126,10 @@ const ProductDashboard = () => {
               Back to Top
             </CustomText>
           </TouchableOpacity>
-        </Animated.View> */}
+        </Animated.View>
 
-        <CollapsibleContainer style={styles.panelContainer}>
+        <CollapsibleContainer
+          style={[styles.panelContainer, {marginTop: insets.top || 20}]}>
           <CollapsibleHeaderContainer containerStyle={styles.transparent}>
             <AnimatedHeader
               showNotice={() => {
